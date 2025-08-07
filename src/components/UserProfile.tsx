@@ -10,21 +10,21 @@ const UserProfile: React.FC<UserProfileProps> = ({ authStatus }) => {
 
   const roleCapabilities = {
     'Senior Business Analyst': [
-      'Execute procurement analysis tools',
-      'Access marketplace data (eBay, Amazon)',
-      'Generate comprehensive reports',
-      'Create custom analytical tools',
-      'Coordinate multi-system workflows',
-      'Access sensitive financial data'
+      'Analyze BTP account services and configurations',
+      'Set up API gateways and backend connections',
+      'Configure OAuth2 authentication and security',
+      'Deploy Cloud Foundry microservices',
+      'Create REST API endpoints and documentation',
+      'Establish frontend-backend communication bridges'
     ]
   };
 
   const recentActivity = [
-    { action: 'Executed Ariba procurement analysis', time: '2 minutes ago', status: 'success' },
-    { action: 'Created custom eBay pricing tool', time: '15 minutes ago', status: 'success' },
-    { action: 'Generated quarterly report', time: '1 hour ago', status: 'success' },
-    { action: 'Updated Salesforce integration', time: '3 hours ago', status: 'warning' },
-    { action: 'Accessed Google Cloud Vision API', time: '5 hours ago', status: 'success' }
+    { action: 'Set up API gateway for React web app', time: '2 minutes ago', status: 'success' },
+    { action: 'Configured SAP HANA database connection', time: '15 minutes ago', status: 'success' },
+    { action: 'Deployed Cloud Foundry microservices', time: '1 hour ago', status: 'success' },
+    { action: 'Updated OAuth2 authentication service', time: '3 hours ago', status: 'warning' },
+    { action: 'Created REST API endpoints', time: '5 hours ago', status: 'success' }
   ];
 
   const getPermissionIcon = (permission: string) => {

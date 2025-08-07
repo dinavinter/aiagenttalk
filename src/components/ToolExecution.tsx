@@ -21,7 +21,7 @@ const ToolExecution: React.FC<ToolExecutionProps> = ({ isProcessing, setIsProces
   const [tools, setTools] = useState<Tool[]>([
     {
       id: '1',
-      name: 'Ariba Procurement API',
+      name: 'SAP BTP Account API',
       type: 'code',
       status: 'idle',
       progress: 0,
@@ -30,34 +30,34 @@ const ToolExecution: React.FC<ToolExecutionProps> = ({ isProcessing, setIsProces
     },
     {
       id: '2',
-      name: 'eBay Marketplace API',
+      name: 'Backend Connection Analyzer',
       type: 'api',
       status: 'idle',
       progress: 0,
       duration: 0,
-      icon: <Globe className="w-5 h-5" />
+      icon: <Code className="w-5 h-5" />
     },
     {
       id: '3',
-      name: 'Google Cloud Vision API',
+      name: 'API Gateway Generator',
       type: 'api',
-      status: 'idle',
-      progress: 0,
-      duration: 0,
-      icon: <Globe className="w-5 h-5" />
-    },
-    {
-      id: '4',
-      name: 'Cloudflare Analytics',
-      type: 'integration',
       status: 'idle',
       progress: 0,
       duration: 0,
       icon: <Zap className="w-5 h-5" />
     },
     {
+      id: '4',
+      name: 'OAuth2 Authentication Service',
+      type: 'integration',
+      status: 'idle',
+      progress: 0,
+      duration: 0,
+      icon: <Globe className="w-5 h-5" />
+    },
+    {
       id: '5',
-      name: 'Internal CRM System',
+      name: 'SAP HANA Database Connector',
       type: 'database',
       status: 'idle',
       progress: 0,
@@ -66,7 +66,7 @@ const ToolExecution: React.FC<ToolExecutionProps> = ({ isProcessing, setIsProces
     },
     {
       id: '6',
-      name: 'Salesforce Integration',
+      name: 'Cloud Foundry Deployment',
       type: 'integration',
       status: 'idle',
       progress: 0,
@@ -75,7 +75,7 @@ const ToolExecution: React.FC<ToolExecutionProps> = ({ isProcessing, setIsProces
     },
     {
       id: '7',
-      name: 'AWS Lambda Function',
+      name: 'REST API Endpoint Builder',
       type: 'code',
       status: 'idle',
       progress: 0,
@@ -84,7 +84,7 @@ const ToolExecution: React.FC<ToolExecutionProps> = ({ isProcessing, setIsProces
     },
     {
       id: '8',
-      name: 'Stripe Payment API',
+      name: 'Frontend-Backend Bridge',
       type: 'api',
       status: 'idle',
       progress: 0,
@@ -116,14 +116,14 @@ const ToolExecution: React.FC<ToolExecutionProps> = ({ isProcessing, setIsProces
             setIsProcessing(false);
             
             const outputs = [
-              'Ariba: Retrieved 247 purchase orders, total value $1.2M',
-              'eBay: Found 89 active listings, avg price $45.67',
-              'Google Vision: Processed 156 images, 94.7% accuracy',
-              'Cloudflare: Analytics data for 50K requests, 99.9% uptime',
-              'CRM: Updated 73 customer records, sync completed',
-              'Salesforce: Created 12 new leads, pipeline value $340K',
-              'AWS Lambda: Function executed in 1.2s, memory usage 128MB',
-              'Stripe: Processed $15,847 in payments, 0 failures'
+              'BTP API: Connected to 3 SAP services, 247 active endpoints discovered',
+              'Backend Analyzer: Found 12 microservices, mapped 89 API routes',
+              'API Gateway: Generated 15 REST endpoints with OpenAPI spec',
+              'OAuth2: Configured authentication, issued 156 access tokens',
+              'HANA Connector: Connected to database, 73 tables mapped',
+              'Cloud Foundry: Deployed 5 microservices, auto-scaling enabled',
+              'REST Builder: Created 8 endpoints, response time <200ms',
+              'Frontend Bridge: WebSocket connection established, real-time sync active'
             ];
             
             const toolIndex = parseInt(toolId) - 1;

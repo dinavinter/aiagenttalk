@@ -56,16 +56,16 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ isProcessing, setIsProces
     setTimeout(() => {
       const responses = [
         {
-         content: `I'll help you with that. Let me connect to Ariba and eBay to process your request: "${userMessage}"`,
-         tools: ['ariba-api', 'ebay-api']
+         content: `I'll analyze your BTP account and set up the backend connection. Let me check your SAP systems and generate the integration endpoints for: "${userMessage}"`,
+         tools: ['sap-btp-api', 'backend-analyzer']
         },
         {
-         content: 'I\'ve queried Google Cloud Vision and updated our internal CRM system. Here are the results:',
-         tools: ['google-vision', 'internal-crm']
+         content: 'I\'ve analyzed your BTP services and created the necessary API endpoints. Here\'s your backend integration setup with authentication tokens:',
+         tools: ['api-generator', 'auth-service']
         },
         {
-         content: 'Based on Cloudflare analytics and Salesforce data, I\'ve coordinated with specialist agents. Task completed successfully.',
-         tools: ['cloudflare-analytics', 'salesforce-integration']
+         content: 'Backend connection established! I\'ve deployed your API gateway and configured the database connections. Your web app can now communicate with the backend via these endpoints.',
+         tools: ['api-gateway', 'database-connector', 'endpoint-deployer']
         }
       ];
 
@@ -102,14 +102,15 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ isProcessing, setIsProces
 
   const getToolIcon = (tool: string) => {
     switch (tool) {
-      case 'ariba-api': return <Database className="w-3 h-3" />;
-      case 'ebay-api': return <Globe className="w-3 h-3" />;
-      case 'google-vision': return <Globe className="w-3 h-3" />;
-      case 'internal-crm': return <Database className="w-3 h-3" />;
-      case 'cloudflare-analytics': return <Zap className="w-3 h-3" />;
-      case 'salesforce-integration': return <Zap className="w-3 h-3" />;
-      case 'aws-lambda': return <Code className="w-3 h-3" />;
-      case 'stripe-api': return <Globe className="w-3 h-3" />;
+      case 'sap-btp-api': return <Database className="w-3 h-3" />;
+      case 'backend-analyzer': return <Code className="w-3 h-3" />;
+      case 'api-generator': return <Zap className="w-3 h-3" />;
+      case 'auth-service': return <Globe className="w-3 h-3" />;
+      case 'api-gateway': return <Globe className="w-3 h-3" />;
+      case 'database-connector': return <Database className="w-3 h-3" />;
+      case 'endpoint-deployer': return <Code className="w-3 h-3" />;
+      case 'sap-hana': return <Database className="w-3 h-3" />;
+      case 'cloud-foundry': return <Zap className="w-3 h-3" />;
       default: return <Zap className="w-3 h-3" />;
     }
   };
@@ -124,8 +125,8 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ isProcessing, setIsProces
               <Bot className="w-4 h-4 text-white" />
             </div>
             <div>
-              <h3 className="text-lg font-medium text-white">AI Agent Assistant</h3>
-              <p className="text-sm text-gray-400">Multi-tool execution & API integration</p>
+              <h3 className="text-lg font-medium text-white">BTP Integration Assistant</h3>
+              <p className="text-sm text-gray-400">Backend connectivity & API orchestration</p>
             </div>
           </div>
           <div className="flex items-center space-x-2">
@@ -193,7 +194,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ isProcessing, setIsProces
             type="text"
             value={inputMessage}
             onChange={(e) => setInputMessage(e.target.value)}
-            placeholder="Try: 'Execute Ariba and eBay analysis then generate report' or 'Create a new Shopify integration tool'"
+            placeholder="Try: 'I want my web app to be able to talk with my backend' or 'Set up API gateway for my React app'"
             className="flex-1 bg-gray-700/50 border border-gray-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
             disabled={isProcessing}
           />
@@ -208,10 +209,10 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ isProcessing, setIsProces
         
         <div className="mt-2 flex flex-wrap gap-2">
           {[
-            'Execute Ariba procurement analysis and eBay price comparison, then update Salesforce',
-            'Create a new Shopify inventory sync tool with real-time updates',
-            'Run Google Vision analysis on product images and generate quality report',
-            'Deploy AWS Lambda function for automated invoice processing'
+            'I want my web app to be able to talk with my backend',
+            'Set up API gateway and authentication for my React application',
+            'Create REST endpoints for my SAP HANA database with OAuth2',
+            'Deploy Cloud Foundry microservices with auto-scaling configuration'
           ].map((suggestion, index) => (
             <button
               key={index}

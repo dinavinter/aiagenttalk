@@ -16,50 +16,50 @@ const AgentNetwork: React.FC = () => {
   const [agents, setAgents] = useState<Agent[]>([
     {
       id: '1',
-      name: 'Master Coordinator',
+      name: 'BTP Integration Coordinator',
       type: 'coordinator',
       status: 'online',
-      specializations: ['Task Distribution', 'Result Aggregation', 'Load Balancing'],
+      specializations: ['API Orchestration', 'Service Discovery', 'Load Balancing'],
       connections: ['2', '3', '4', '5'],
       messagesProcessed: 1247,
       responseTime: 120
     },
     {
       id: '2',
-      name: 'Ariba Specialist',
+      name: 'SAP Backend Specialist',
       type: 'specialist',
       status: 'busy',
-      specializations: ['Procurement Data', 'Purchase Orders', 'Supplier Analytics'],
+      specializations: ['SAP HANA', 'BTP Services', 'Database Connections'],
       connections: ['1', '3'],
       messagesProcessed: 432,
       responseTime: 340
     },
     {
       id: '3',
-      name: 'External API Gateway',
+      name: 'API Gateway Manager',
       type: 'executor',
       status: 'online',
-      specializations: ['eBay API', 'Google APIs', 'Stripe Integration'],
+      specializations: ['REST APIs', 'GraphQL', 'WebSocket Connections'],
       connections: ['1', '2', '4'],
       messagesProcessed: 891,
       responseTime: 85
     },
     {
       id: '4',
-      name: 'Cloud Functions',
+      name: 'Cloud Foundry Manager',
       type: 'executor',
       status: 'online',
-      specializations: ['AWS Lambda', 'Cloudflare Workers', 'Azure Functions'],
+      specializations: ['Microservices', 'Container Orchestration', 'Auto-scaling'],
       connections: ['1', '3', '5'],
       messagesProcessed: 567,
       responseTime: 200
     },
     {
       id: '5',
-      name: 'CRM & Database',
+      name: 'Authentication & Security',
       type: 'specialist',
       status: 'online',
-      specializations: ['Salesforce CRM', 'Internal Database', 'Data Sync'],
+      specializations: ['OAuth2', 'JWT Tokens', 'API Security'],
       connections: ['1', '4'],
       messagesProcessed: 324,
       responseTime: 150
@@ -78,13 +78,13 @@ const AgentNetwork: React.FC = () => {
 
       if (toAgent) {
         const messages = [
-          'Task delegation: Process Ariba procurement request',
-          'eBay API: Retrieved 89 active listings successfully',
-          'Google Vision: Image analysis completed with 94.7% accuracy',
-          'AWS Lambda: Function executed, processed 1.2K records',
-          'Salesforce sync: Updated 73 customer records',
-          'Cloudflare: Analytics data retrieved for dashboard',
-          'Stripe API: Payment processing completed successfully'
+          'API Gateway: Generated REST endpoints for web app backend communication',
+          'SAP HANA: Database connection established, 247 tables discovered',
+          'OAuth2: Authentication service configured, tokens issued',
+          'Cloud Foundry: Microservices deployed, auto-scaling active',
+          'Backend Analyzer: API routes mapped, 89 endpoints documented',
+          'WebSocket Bridge: Real-time connection established for frontend',
+          'BTP Services: Account analysis complete, 12 services integrated'
         ];
 
         const newActivity = {

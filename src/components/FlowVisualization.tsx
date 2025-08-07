@@ -58,48 +58,48 @@ const FlowVisualization: React.FC = () => {
     },
     {
       id: '4',
-     title: 'System Selection',
-     description: 'Choose appropriate systems (Ariba, eBay, Google, etc.)',
+     title: 'BTP Service Discovery',
+     description: 'Discover available SAP BTP services and backend systems',
       icon: <Zap className="w-5 h-5" />,
       status: 'pending',
       duration: 600,
-     details: ['System matching', 'API availability check', 'Resource allocation']
+     details: ['Service discovery', 'API availability check', 'Resource allocation']
     },
     {
       id: '5',
-     title: 'AWS Lambda Execution',
-     description: 'Execute serverless functions and code',
+     title: 'API Gateway Setup',
+     description: 'Configure API gateway and REST endpoints',
       icon: <Code className="w-5 h-5" />,
       status: 'pending',
       duration: 2000,
-     details: ['Lambda preparation', 'Environment setup', 'Function execution']
+     details: ['Gateway configuration', 'Endpoint creation', 'Route mapping']
     },
     {
       id: '6',
-     title: 'External API Calls',
-     description: 'Connect to eBay, Google, Stripe, Cloudflare APIs',
+     title: 'Backend Connection',
+     description: 'Establish connection to SAP HANA and BTP services',
       icon: <Globe className="w-5 h-5" />,
       status: 'pending',
       duration: 1500,
-     details: ['API endpoint routing', 'Request formatting', 'Response parsing']
+     details: ['Database connection', 'Service binding', 'Authentication setup']
     },
     {
       id: '7',
-     title: 'CRM & Database Sync',
-     description: 'Update Salesforce CRM and internal databases',
+     title: 'Cloud Foundry Deployment',
+     description: 'Deploy microservices to Cloud Foundry platform',
       icon: <Database className="w-5 h-5" />,
       status: 'pending',
       duration: 1000,
-     details: ['Salesforce sync', 'CRM updates', 'Data validation']
+     details: ['Container deployment', 'Service scaling', 'Health monitoring']
     },
     {
       id: '8',
-     title: 'Multi-System Coordination',
-     description: 'Coordinate between Ariba, eBay, and internal systems',
+     title: 'Frontend-Backend Bridge',
+     description: 'Create communication bridge between web app and backend',
       icon: <MessageCircle className="w-5 h-5" />,
       status: 'pending',
       duration: 1800,
-     details: ['System discovery', 'Data routing', 'Result aggregation']
+     details: ['WebSocket setup', 'Real-time sync', 'API documentation']
     },
     {
       id: '9',

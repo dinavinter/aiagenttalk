@@ -60,8 +60,8 @@ function App() {
                 <Bot className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-white">NexusAI Platform</h1>
-                <p className="text-sm text-gray-400">by Quantum Dynamics Corp • Enterprise AI Solutions</p>
+                <h1 className="text-xl font-bold text-white">BTP Account Analyzer</h1>
+                <p className="text-sm text-gray-400">by SAP Business Technology Platform • Backend Integration Hub</p>
               </div>
             </div>
             
