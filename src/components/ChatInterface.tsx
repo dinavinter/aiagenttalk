@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Bot, User, Code, Database, Globe, Zap } from 'lucide-react';
+import { Send, Bot, User, Code, Database, Globe, Zap, ExternalLink, Copy, Download } from 'lucide-react';
 
 interface Message {
   id: string;
@@ -8,6 +8,14 @@ interface Message {
   timestamp: Date;
   tools?: string[];
   status?: 'processing' | 'completed' | 'error';
+  artifacts?: DeploymentArtifact[];
+}
+
+interface DeploymentArtifact {
+  type: 'url' | 'config' | 'code' | 'documentation';
+  title: string;
+  content: string;
+  description?: string;
 }
 
 interface ChatInterfaceProps {
@@ -56,16 +64,139 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ isProcessing, setIsProces
     setTimeout(() => {
       const responses = [
         {
-         content: `I'll analyze your BTP account and set up the backend connection. Let me check your SAP systems and generate the integration endpoints for: "${userMessage}"`,
-         tools: ['sap-btp-api', 'backend-analyzer']
+          content: `I've analyzed your BTP account and set up the backend connection. Here are your generated endpoints and configuration:`,
+          tools: ['sap-btp-api', 'backend-analyzer', 'api-gateway', 'oauth2-service'],
+          artifacts: [
+            {
+              type: 'url',
+              title: 'API Gateway Endpoint',
+              content: 'https://api-gateway-acme.cfapps.eu10.hana.ondemand.com',
+              description: 'Main API gateway for your web app'
+            },
+            {
+              type: 'url',
+              title: 'OAuth2 Token Endpoint',
+              content: 'https://auth-acme.authentication.eu10.hana.ondemand.com/oauth/token',
+              description: 'Authentication endpoint for JWT tokens'
+            },
+            {
+              type: 'config',
+              title: 'Frontend Configuration',
+              content: `const API_CONFIG = {
+  baseURL: 'https://api-gateway-acme.cfapps.eu10.hana.ondemand.com',
+  authURL: 'https://auth-acme.authentication.eu10.hana.ondemand.com',
+  clientId: 'webapp-client-12345',
+  scopes: ['read', 'write', 'admin']
+};`,
+              description: 'Add this to your React app configuration'
+            },
+            {
+              type: 'code',
+              title: 'API Client Code',
+              content: `// React API Client
+import axios from 'axios';
+
+const apiClient = axios.create({
+  baseURL: API_CONFIG.baseURL,
+  headers: {
+    'Content-Type': 'application/json'
+  }
+});
+
+// Add auth interceptor
+apiClient.interceptors.request.use((config) => {
+  const token = localStorage.getItem('access_token');
+  if (token) {
+    config.headers.Authorization = \`Bearer \${token}\`;
+  }
+  return config;
+});
+
+export default apiClient;`,
+              description: 'Ready-to-use API client for your React app'
+            }
+          ]
         },
         {
-         content: 'I\'ve analyzed your BTP services and created the necessary API endpoints. Here\'s your backend integration setup with authentication tokens:',
-         tools: ['api-generator', 'auth-service']
+          content: 'I\'ve deployed your Cloud Foundry microservices and configured the database connections. Here are your deployment artifacts:',
+          tools: ['cloud-foundry', 'sap-hana', 'endpoint-deployer'],
+          artifacts: [
+            {
+              type: 'url',
+              title: 'Microservice - User Management',
+              content: 'https://user-service-acme.cfapps.eu10.hana.ondemand.com',
+              description: 'User CRUD operations and authentication'
+            },
+            {
+              type: 'url',
+              title: 'Microservice - Data Analytics',
+              content: 'https://analytics-service-acme.cfapps.eu10.hana.ondemand.com',
+              description: 'Business intelligence and reporting'
+            },
+            {
+              type: 'documentation',
+              title: 'API Documentation',
+              content: 'https://api-docs-acme.cfapps.eu10.hana.ondemand.com/swagger-ui',
+              description: 'Interactive API documentation with Swagger UI'
+            },
+            {
+              type: 'config',
+              title: 'Database Connection',
+              content: `{
+  "hana": {
+    "host": "acme-hana-db.hana.ondemand.com",
+    "port": 443,
+    "database": "ACME_PROD",
+    "schema": "WEBAPP_DATA",
+    "ssl": true,
+    "poolSize": 10
+  }
+}`,
+              description: 'SAP HANA database configuration'
+            }
+          ]
         },
         {
-         content: 'Backend connection established! I\'ve deployed your API gateway and configured the database connections. Your web app can now communicate with the backend via these endpoints.',
-         tools: ['api-gateway', 'database-connector', 'endpoint-deployer']
+          content: 'Backend connection established! I\'ve set up WebSocket connections and real-time sync. Your web app can now communicate seamlessly with the backend.',
+          tools: ['websocket-bridge', 'real-time-sync', 'load-balancer'],
+          artifacts: [
+            {
+              type: 'url',
+              title: 'WebSocket Endpoint',
+              content: 'wss://websocket-acme.cfapps.eu10.hana.ondemand.com',
+              description: 'Real-time bidirectional communication'
+            },
+            {
+              type: 'url',
+              title: 'Health Check Endpoint',
+              content: 'https://health-acme.cfapps.eu10.hana.ondemand.com/status',
+              description: 'Monitor backend service health'
+            },
+            {
+              type: 'code',
+              title: 'WebSocket Client',
+              content: `// WebSocket connection for real-time updates
+const ws = new WebSocket('wss://websocket-acme.cfapps.eu10.hana.ondemand.com');
+
+ws.onopen = () => {
+  console.log('Connected to backend');
+  ws.send(JSON.stringify({ type: 'auth', token: getAuthToken() }));
+};
+
+ws.onmessage = (event) => {
+  const data = JSON.parse(event.data);
+  // Handle real-time updates
+  updateUI(data);
+};`,
+              description: 'WebSocket client for real-time features'
+            },
+            {
+              type: 'documentation',
+              title: 'Integration Guide',
+              content: 'https://docs-acme.cfapps.eu10.hana.ondemand.com/integration-guide',
+              description: 'Complete integration documentation'
+            }
+          ]
         }
       ];
 
@@ -73,7 +204,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ isProcessing, setIsProces
       
       setMessages(prev => prev.map(msg => 
         msg.id === processingMessage.id 
-          ? { ...msg, content: randomResponse.content, status: 'completed', tools: randomResponse.tools }
+          ? { ...msg, content: randomResponse.content, status: 'completed', tools: randomResponse.tools, artifacts: randomResponse.artifacts }
           : msg
       ));
       
@@ -109,12 +240,39 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ isProcessing, setIsProces
       case 'api-gateway': return <Globe className="w-3 h-3" />;
       case 'database-connector': return <Database className="w-3 h-3" />;
       case 'endpoint-deployer': return <Code className="w-3 h-3" />;
+      case 'oauth2-service': return <Globe className="w-3 h-3" />;
       case 'sap-hana': return <Database className="w-3 h-3" />;
       case 'cloud-foundry': return <Zap className="w-3 h-3" />;
+      case 'websocket-bridge': return <MessageCircle className="w-3 h-3" />;
+      case 'real-time-sync': return <Zap className="w-3 h-3" />;
+      case 'load-balancer': return <Globe className="w-3 h-3" />;
       default: return <Zap className="w-3 h-3" />;
     }
   };
 
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+  };
+
+  const getArtifactIcon = (type: string) => {
+    switch (type) {
+      case 'url': return <ExternalLink className="w-4 h-4" />;
+      case 'config': return <Code className="w-4 h-4" />;
+      case 'code': return <Code className="w-4 h-4" />;
+      case 'documentation': return <Database className="w-4 h-4" />;
+      default: return <Code className="w-4 h-4" />;
+    }
+  };
+
+  const getArtifactColor = (type: string) => {
+    switch (type) {
+      case 'url': return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+      case 'config': return 'bg-green-500/20 text-green-400 border-green-500/30';
+      case 'code': return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
+      case 'documentation': return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
+      default: return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+    }
+  };
   return (
     <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700 overflow-hidden">
       {/* Chat Header */}
@@ -179,6 +337,51 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ isProcessing, setIsProces
                       <span className="text-xs text-gray-400">Processing...</span>
                     </div>
                   )}
+                  
+                  {/* Deployment Artifacts */}
+                  {message.artifacts && message.artifacts.length > 0 && (
+                    <div className="mt-4 space-y-3">
+                      <h4 className="text-sm font-medium text-white">Generated Artifacts:</h4>
+                      {message.artifacts.map((artifact, index) => (
+                        <div key={index} className={`p-3 rounded-lg border ${getArtifactColor(artifact.type)}`}>
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center space-x-2">
+                              {getArtifactIcon(artifact.type)}
+                              <span className="text-sm font-medium">{artifact.title}</span>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              {artifact.type === 'url' && (
+                                <button
+                                  onClick={() => window.open(artifact.content, '_blank')}
+                                  className="p-1 hover:bg-white/10 rounded transition-colors duration-200"
+                                  title="Open URL"
+                                >
+                                  <ExternalLink className="w-3 h-3" />
+                                </button>
+                              )}
+                              <button
+                                onClick={() => copyToClipboard(artifact.content)}
+                                className="p-1 hover:bg-white/10 rounded transition-colors duration-200"
+                                title="Copy to clipboard"
+                              >
+                                <Copy className="w-3 h-3" />
+                              </button>
+                            </div>
+                          </div>
+                          {artifact.description && (
+                            <p className="text-xs opacity-80 mb-2">{artifact.description}</p>
+                          )}
+                          <div className="bg-black/20 rounded p-2 font-mono text-xs overflow-x-auto">
+                            {artifact.type === 'code' || artifact.type === 'config' ? (
+                              <pre className="whitespace-pre-wrap">{artifact.content}</pre>
+                            ) : (
+                              <span>{artifact.content}</span>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -212,7 +415,9 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ isProcessing, setIsProces
             'I want my web app to be able to talk with my backend',
             'Set up API gateway and authentication for my React application',
             'Create REST endpoints for my SAP HANA database with OAuth2',
-            'Deploy Cloud Foundry microservices with auto-scaling configuration'
+            'Deploy Cloud Foundry microservices with auto-scaling configuration',
+            'Set up WebSocket connection for real-time data sync',
+            'Generate Swagger documentation for my APIs'
           ].map((suggestion, index) => (
             <button
               key={index}
